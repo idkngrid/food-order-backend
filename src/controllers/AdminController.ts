@@ -1,20 +1,20 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { CreateVandorInput } from '../dto';
-import { Vandor } from '../models';
+import { CreateVendorInput } from '../dto';
+import { Vendor } from '../models';
 import { GeneratePassword, GenerateSalt } from '../utility';
 
-export const createVandor = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, ownerName, foodType, pincode, address, phone, email, password } = <CreateVandorInput>req.body;
+export const createVendor = async (req: Request, res: Response, next: NextFunction) => {
+  const { name, ownerName, foodType, pincode, address, phone, email, password } = <CreateVendorInput>req.body;
 
-  const existingVandor = await Vandor.findOne({ email: email });
-  if (existingVandor !== null) {
-    return res.json({ "message": "A vandor with this email address already exists." })
+  const existingVendor = await Vendor.findOne({ email: email });
+  if (existingVendor !== null) {
+    return res.json({ "message": "A vendor with this email address already exists." })
   }
 
   const salt = await GenerateSalt();
   const userPassword = await GeneratePassword(password, salt);
 
-  const createdVandor = await Vandor.create({
+  const createdVendor = await Vendor.create({
     name: name, 
     ownerName: ownerName, 
     foodType: foodType, 
@@ -29,14 +29,14 @@ export const createVandor = async (req: Request, res: Response, next: NextFuncti
     coverImages: []
   })
 
-  return res.json(createdVandor);
+  return res.json(createdVendor);
 
 }
 
-export const getVandors = async (req: Request, res: Response, next: NextFunction) => {
+export const getVendors = async (req: Request, res: Response, next: NextFunction) => {
 
 }
 
-export const getVandorById = async (req: Request, res: Response, next: NextFunction) => {
+export const getVendorById = async (req: Request, res: Response, next: NextFunction) => {
 
 }
